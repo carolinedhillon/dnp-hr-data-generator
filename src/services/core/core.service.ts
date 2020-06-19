@@ -20,11 +20,11 @@ export const salaryMap = {
     L5: { role: 'Director', salary: {min: 70000, max: 100000}, bonus: { min: 0.1, max:1} }
   },
   'Sales': {
-    L1: { role: 'Junior Sales', salary: {min: 20000, max: 40000}, commissions: 0.4 },
-    L2: { role: 'Sales Consultant', salary: {min: 30000, max: 50000}, commissions: 0.5 },
-    L3: { role: 'Sales Manager', salary: {min: 40000, max: 60000}, commissions: 0.2 },
+    L1: { role: 'Junior Sales', salary: {min: 20000, max: 40000}, commissions: 0.4},
+    L2: { role: 'Sales Consultant', salary: {min: 30000, max: 50000}, commissions: 0.4 },
+    L3: { role: 'Sales Manager', salary: {min: 40000, max: 60000}, commissions: 0.4 },
     L4: { role: 'Sales Country Manager', salary: {min: 50000, max: 70000}, commissions: 0.3 },
-    L5: { role: 'Sales Regional Director', salary: {min: 70000, max: 100000}, commissions: 0.4 }
+    L5: { role: 'Sales Regional Director', salary: {min: 70000, max: 100000}, commissions: 0.3 }
   },
   'Default': {
     L1: { role: 'Coordinator', salary: {min: 20000, max: 40000}, bonus: { min: 0.1, max:1} },
@@ -45,6 +45,7 @@ export class CoreService {
     let workerList: Worker[] = [];
     for (let row = 0; row < limit; row++) {
         const name: Worker.Name = {firstName: faker.name.firstName(),lastName:faker.name.lastName(), title: <any>faker.name.prefix()};
+        const employeeID = faker.internet.password(4, false, /[0-9]/);
         const country = faker.random.arrayElement(Object.keys(offices));
         const department = this.valueFromEnum(Worker.Departments);
         // this.logger.log(`department :: ${department}`);
@@ -53,15 +54,15 @@ export class CoreService {
         const level = faker.random.arrayElement(Object.keys(departmentObj));
         const role = departmentObj[level]['role'];
         const salary: Worker.Salary = this.calculateSalary(departmentObj[level]);
-
         
         workerList.push({
+            employeeID: employeeID,
             name: name,
             personalDetails: {
                 dateOfBirth: moment(faker.date.between('1950-01-01','2000-01-01'),'YYYY-MM-DD').format('YYYY-MM-DD'),
                 deceased: false,
-                martialStatus: this.valueFromEnum(Worker.MartialStatus),
-                spouce: `${this.valueFromEnum(Worker.Title)} ${faker.name.firstName()} ${faker.random.arrayElement([name.lastName, faker.name.lastName()])}`
+                maritalStatus: this.valueFromEnum(Worker.MaritalStatus),
+                spouse: `${this.valueFromEnum(Worker.Title)} ${faker.name.firstName()} ${faker.random.arrayElement([name.lastName, faker.name.lastName()])}`
             },
             address:{
                 country: country,
