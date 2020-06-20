@@ -47,7 +47,7 @@ export const salaryMap = {
 export namespace Worker{
     export enum Title {Mr, Mrs,Prof, Doc,Ms};
     export enum IDType {Passport, 'Driving Licence', Other};
-    export enum MartialStatus {Single, Married, Divorced, Other};
+    export enum MaritalStatus {Single, Married, Divorced, Other};
     export enum Departments { 'Human Resources', Finance, Marketing, Sales, Delivery, Operations, Support};
     // export enum Departments { 'Human Resources', Sales};
     export enum SalaryFrequency { Monthly, Quarterly, Annual};
@@ -74,10 +74,10 @@ export namespace Worker{
         link: string;
     }
     export interface PersonalDetails{
-        martialStatus: Worker.MartialStatus;
+        maritalStatus: Worker.MaritalStatus;
         dateOfBirth: string,
         deceased: boolean;
-        spouce?: string;
+        spouse?: string;
     }
 
     export interface Salary{ 

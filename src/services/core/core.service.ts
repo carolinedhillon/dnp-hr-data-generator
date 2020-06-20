@@ -23,7 +23,6 @@ export class CoreService {
         const level = faker.random.arrayElement(Object.keys(departmentObj));
         const role = departmentObj[level]['role'];
         const salary: Worker.Salary = this.calculateSalary(departmentObj[level]);
-
         
         workerList.push({
             id: `EM-${("0000"+row).slice(-5)}`,
@@ -31,8 +30,8 @@ export class CoreService {
             personalDetails: {
                 dateOfBirth: moment(faker.date.between('1950-01-01','2000-01-01'),'YYYY-MM-DD').format('YYYY-MM-DD'),
                 deceased: false,
-                martialStatus: this.valueFromEnum(Worker.MartialStatus),
-                spouce: `${this.valueFromEnum(Worker.Title)} ${faker.name.firstName()} ${faker.random.arrayElement([name.lastName, faker.name.lastName()])}`
+                maritalStatus: this.valueFromEnum(Worker.MaritalStatus),
+                spouse: `${this.valueFromEnum(Worker.Title)} ${faker.name.firstName()} ${faker.random.arrayElement([name.lastName, faker.name.lastName()])}`
             },
             address:{
                 country: country,
