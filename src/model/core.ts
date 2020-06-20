@@ -1,16 +1,49 @@
 
-export interface Worker{
-    name: Worker.Name; 
-    address?: Worker.Address;
-    identityDocument?: Worker.IdentityDocument;
-    personalDetails?: Worker.PersonalDetails;
-    salary?: Worker.Salary;
+  export interface Worker{
+      id: string;
+      name: Worker.Name; 
+      address?: Worker.Address;
+      identityDocument?: Worker.IdentityDocument;
+      personalDetails?: Worker.PersonalDetails;
+      salary?: Worker.Salary;
     department?: Worker.Departments;
     level?: string;
     role?: string;
 }
 
+export namespace Company{
 
+export const offices = {
+  'India': ['New Delhi', 'Mumbai','Hyderbad','Pune'],
+  'United Kingdom': ['London','Manchester','Leeds'],
+  'United Stated of America': ['New York','San Franciso','Los Angeles'],
+  'France': ['Paris','Lyon']
+};
+
+export const salaryMap = {
+    'Human Resources': {
+      L1: { role: 'Coordinator', salary: {min: 20000, max: 40000}, bonus: { min: 0.1, max:1} },
+      L2: { role: 'Advisor', salary: {min: 30000, max: 50000}, bonus: { min: 0.1, max:1} },
+      L3: { role: 'Manager', salary: {min: 40000, max: 60000}, bonus: { min: 0.1, max:1} },
+      L4: { role: 'Senior Manager', salary: {min: 50000, max: 70000}, bonus: { min: 0.1, max:1} },
+      L5: { role: 'Director', salary: {min: 70000, max: 100000}, bonus: { min: 0.1, max:1} }
+    },
+    'Sales': {
+      L1: { role: 'Junior Sales', salary: {min: 20000, max: 40000}, commissions: 0.4 },
+      L2: { role: 'Sales Consultant', salary: {min: 30000, max: 50000}, commissions: 0.5 },
+      L3: { role: 'Sales Manager', salary: {min: 40000, max: 60000}, commissions: 0.2 },
+      L4: { role: 'Sales Country Manager', salary: {min: 50000, max: 70000}, commissions: 0.3 },
+      L5: { role: 'Sales Regional Director', salary: {min: 70000, max: 100000}, commissions: 0.4 }
+    },
+    'Default': {
+      L1: { role: 'Coordinator', salary: {min: 20000, max: 40000}, bonus: { min: 0.1, max:1} },
+      L2: { role: 'Advisor', salary: {min: 30000, max: 50000}, bonus: { min: 0.1, max:1} },
+      L3: { role: 'Manager', salary: {min: 40000, max: 60000}, bonus: { min: 0.1, max:1} },
+      L4: { role: 'Senior Manager', salary: {min: 50000, max: 70000}, bonus: { min: 0.1, max:1} },
+      L5: { role: 'Director', salary: {min: 70000, max: 100000}, bonus: { min: 0.1, max:1} }
+    },
+  };
+}
 export namespace Worker{
     export enum Title {Mr, Mrs,Prof, Doc,Ms};
     export enum IDType {Passport, 'Driving Licence', Other};

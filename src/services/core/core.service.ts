@@ -1,39 +1,9 @@
 import { Injectable, Logger } from '@nestjs/common';
 import  * as faker from 'faker';
 import * as moment from 'moment'
-import {Worker} from 'src/model/core';
+import {Worker, Company} from 'src/model/core';
  
 
-export const offices = {
-  'India': ['New Delhi', 'Mumbai','Hyderbad','Pune'],
-  'United Kingdom': ['London','Manchester','Leeds'],
-  'United Stated of America': ['New York','San Franciso','Los Angeles'],
-  'France': ['Paris','Lyon']
-};
-
-export const salaryMap = {
-  'Human Resources': {
-    L1: { role: 'Coordinator', salary: {min: 20000, max: 40000}, bonus: { min: 0.1, max:1} },
-    L2: { role: 'Advisor', salary: {min: 30000, max: 50000}, bonus: { min: 0.1, max:1} },
-    L3: { role: 'Manager', salary: {min: 40000, max: 60000}, bonus: { min: 0.1, max:1} },
-    L4: { role: 'Senior Manager', salary: {min: 50000, max: 70000}, bonus: { min: 0.1, max:1} },
-    L5: { role: 'Director', salary: {min: 70000, max: 100000}, bonus: { min: 0.1, max:1} }
-  },
-  'Sales': {
-    L1: { role: 'Junior Sales', salary: {min: 20000, max: 40000}, commissions: 0.4 },
-    L2: { role: 'Sales Consultant', salary: {min: 30000, max: 50000}, commissions: 0.5 },
-    L3: { role: 'Sales Manager', salary: {min: 40000, max: 60000}, commissions: 0.2 },
-    L4: { role: 'Sales Country Manager', salary: {min: 50000, max: 70000}, commissions: 0.3 },
-    L5: { role: 'Sales Regional Director', salary: {min: 70000, max: 100000}, commissions: 0.4 }
-  },
-  'Default': {
-    L1: { role: 'Coordinator', salary: {min: 20000, max: 40000}, bonus: { min: 0.1, max:1} },
-    L2: { role: 'Advisor', salary: {min: 30000, max: 50000}, bonus: { min: 0.1, max:1} },
-    L3: { role: 'Manager', salary: {min: 40000, max: 60000}, bonus: { min: 0.1, max:1} },
-    L4: { role: 'Senior Manager', salary: {min: 50000, max: 70000}, bonus: { min: 0.1, max:1} },
-    L5: { role: 'Director', salary: {min: 70000, max: 100000}, bonus: { min: 0.1, max:1} }
-  },
-};
 
 @Injectable()
 export class CoreService {
@@ -45,10 +15,10 @@ export class CoreService {
     let workerList: Worker[] = [];
     for (let row = 0; row < limit; row++) {
         const name: Worker.Name = {firstName: faker.name.firstName(),lastName:faker.name.lastName(), title: <any>faker.name.prefix()};
-        const country = faker.random.arrayElement(Object.keys(offices));
+        const country = faker.random.arrayElement(Object.keys(Company.offices));
         const department = this.valueFromEnum(Worker.Departments);
         // this.logger.log(`department :: ${department}`);
-        const departmentObj = salaryMap[department] || salaryMap['Default'];    
+        const departmentObj = Company.salaryMap[department] || Company.salaryMap['Default'];    
 
         const level = faker.random.arrayElement(Object.keys(departmentObj));
         const role = departmentObj[level]['role'];
@@ -56,6 +26,7 @@ export class CoreService {
 
         
         workerList.push({
+            id: `EM-${("0000"+row).slice(-5)}`,
             name: name,
             personalDetails: {
                 dateOfBirth: moment(faker.date.between('1950-01-01','2000-01-01'),'YYYY-MM-DD').format('YYYY-MM-DD'),
@@ -65,7 +36,7 @@ export class CoreService {
             },
             address:{
                 country: country,
-                city: faker.random.arrayElement(offices[country]),
+                city: faker.random.arrayElement(Company.offices[country]),
                 postCode: faker.address.zipCode(),
                 streetName: faker.address.streetAddress()
             },
